@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router';
 
 const links = [
@@ -19,16 +19,25 @@ function linkClass({ isActive }: { isActive: boolean }) {
 
 export default function NavLinks() {
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // While the mobile menu is open, Escape closes it and returns focus to the menu button.
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        buttonRef.current?.focus();
+      }
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open]);
 
   return (
-    <nav
-      aria-label="Main"
-      className="flex items-center"
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') setOpen(false);
-      }}
-    >
+    <nav aria-label="Main" className="flex items-center">
       <button
+        ref={buttonRef}
         type="button"
         className="rounded px-3 py-2 text-sm font-medium hover:bg-slate-100 sm:hidden dark:hover:bg-slate-800"
         aria-expanded={open}
@@ -44,12 +53,7 @@ export default function NavLinks() {
       >
         {links.map(({ to, label }) => (
           <li key={to}>
-            <NavLink
-              to={to}
-              end={to === '/'}
-              className={linkClass}
-              onClick={() => setOpen(false)}
-            >
+            <NavLink to={to} end={to === '/'} className={linkClass} onClick={() => setOpen(false)}>
               {label}
             </NavLink>
           </li>

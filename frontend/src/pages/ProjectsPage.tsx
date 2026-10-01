@@ -14,10 +14,7 @@ export default function ProjectsPage() {
       </h1>
       <ul className="grid gap-4 sm:grid-cols-2">
         {projects.map((p) => (
-          <li
-            key={p.slug}
-            className="rounded-lg border border-slate-200 p-4 dark:border-slate-800"
-          >
+          <li key={p.slug} className="rounded-lg border border-slate-200 p-4 dark:border-slate-800">
             <h2 className="text-lg font-semibold">
               <Link to={`/projects/${p.slug}`} className="rounded hover:underline">
                 {p.title}
