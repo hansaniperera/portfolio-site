@@ -26,12 +26,15 @@ Node version is pinned in `frontend/.nvmrc`.
 npm install           # install deps
 npm run dev           # dev server at http://localhost:5173
 npm test              # run tests once (vitest run)
+npm run test:watch    # tests in watch mode
 npm run lint          # ESLint
 npm run format        # Prettier write; format:check to verify only
 npm run build         # type-check + production build to dist/
 npm run preview       # serve the production build
 ```
 Before committing: `npm run lint && npm run format:check && npm test && npm run build`.
+
+Version pins: TypeScript `~6.0` (typescript-eslint doesn't support TS 7 yet) and ESLint 9 (eslint-plugin-jsx-a11y doesn't support ESLint 10 yet). Don't bump these without checking those peer ranges.
 
 ## Coding conventions
 - TypeScript strict mode; no `any` without a comment explaining why.
