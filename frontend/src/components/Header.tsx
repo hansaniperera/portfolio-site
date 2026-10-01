@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import NavLinks from './NavLinks.tsx';
+import ThemeToggle from './ThemeToggle.tsx';
 
 export default function Header() {
   return (
@@ -8,7 +9,10 @@ export default function Header() {
         <Link to="/" className="rounded text-lg font-semibold">
           Portfolio
         </Link>
-        <NavLinks />
+        <div className="flex items-center gap-1">
+          <NavLinks />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
