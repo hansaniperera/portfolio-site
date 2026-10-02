@@ -18,8 +18,9 @@ export default function HomePage() {
       <p className="max-w-2xl text-lg">{profile.summary}</p>
       <dl className="max-w-2xl space-y-2">
         {facts.map(({ term, detail }) => (
-          <div key={term} className="sm:flex sm:gap-2">
-            <dt className="font-semibold">{term}:</dt>
+          // Fixed-width label column so every value starts at the same position.
+          <div key={term} className="sm:grid sm:grid-cols-[8rem_1fr] sm:gap-4">
+            <dt className="font-semibold">{term}</dt>
             <dd>{detail}</dd>
           </div>
         ))}
