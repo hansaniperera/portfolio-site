@@ -30,10 +30,12 @@ export default function HomePage() {
           <li key={label}>
             <a
               href={url}
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-block rounded border border-slate-300 px-3 py-1 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
             >
-              {label}
+              {label} <span aria-hidden="true">↗</span>
+              <span className="sr-only">(opens in a new tab)</span>
             </a>
           </li>
         ))}
