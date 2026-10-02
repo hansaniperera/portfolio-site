@@ -77,7 +77,7 @@ export const experience: Role[] = [
       'Kubernetes',
       'Jenkins',
       'Gradle',
-      'AWS (S3, Secret Manager)',
+      'AWS (S3, Secrets Manager)',
       'EFK',
     ],
   },
