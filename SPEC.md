@@ -10,28 +10,33 @@ Pages:
 - Home: short intro, role I'm looking for, links (GitHub, LinkedIn, email)
 - Projects: list + detail page (problem, stack, my role, outcome, links)
 - Experience: timeline of roles
-- Blog/Notes (optional in v1): short posts, including "How I built this with an AI agent"
+- Blog/Notes: **deferred** (not in v1 so far): short posts, including "How I built this with an AI agent"
 - Contact: form that stores the message and emails me
 
 Out of scope for v1: user accounts, comments, analytics dashboards, multi-language.
 
 ## 3. Architecture
-- Frontend: React (Vite or Next.js), TypeScript, Tailwind. Static build.
-- Backend: Spring Boot 3 (Java 21), REST API, Flyway migrations.
-- Database: PostgreSQL.
+- Frontend: React (Vite), TypeScript, Tailwind. Static build.
+- Backend: Spring Boot 4.1 (Java 21), Maven (wrapper), REST API, Flyway migrations.
+- Database: PostgreSQL 17.
 - Hosting: frontend on S3 + CloudFront; backend + Postgres via Docker Compose on one Lightsail instance; Route 53 for DNS; HTTPS everywhere.
 - CI/CD: GitHub Actions (build, test, deploy on merge to main).
 
 ## 4. Data model
-- project(id, slug, title, summary, description, tech_stack, repo_url, live_url, sort_order, published)
-- experience(id, company, role, start_date, end_date, description, sort_order)
-- post(id, slug, title, body_markdown, published_at, published)
+- project(id, slug, title, category, employer, role, summary, start_date, end_date, tech_stack text[], link_url, sort_order, published)
+  - category is 'professional' or 'academic'; employer, role, end_date and link_url are nullable.
+  - slug comes from the title: lowercase, hyphenated, unique.
+  - Ordered professional first, then academic, each newest first.
+- experience(id, company, role, location, start_date, end_date, responsibilities text[], achievements text[], tech_stack text[], sort_order)
+- post(id, slug, title, body_markdown, published_at, published): **deferred** with the blog.
 - contact_message(id, name, email, message, created_at)
+
+Dates are stored as the first of the month and returned by the API as "YYYY-MM" (e.g. "2025-09"). A null end_date means "present".
 
 ## 5. API (v1)
 - GET /api/projects, GET /api/projects/{slug}
 - GET /api/experience
-- GET /api/posts, GET /api/posts/{slug}
+- GET /api/posts, GET /api/posts/{slug}: **deferred** with the blog
 - POST /api/contact (validated, rate limited)
 - GET /actuator/health
 Admin content is edited via migrations/seed data in v1 (no admin UI).
@@ -60,5 +65,6 @@ Admin content is edited via migrations/seed data in v1 (no admin UI).
 ## 9. Open decisions
 - Frontend framework: **Decided:** Vite + React + TypeScript + Tailwind
 - Contact email delivery: AWS SES or a third-party service
-- Whether the blog is in v1 or v2
+- Blog: **Deferred** (not in Milestone 2; revisit later)
+- Backend stack: **Decided:** Spring Boot 4.1, Java 21, Maven, PostgreSQL 17
 - Domain name

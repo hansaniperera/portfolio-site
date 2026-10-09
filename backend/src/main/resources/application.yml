@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: portfolio
+  datasource:
+    # Credentials come from the environment (.env via docker compose). No real values here.
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/portfolio}
+    username: ${DB_USERNAME:portfolio}
+    password: ${DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Flyway owns the schema; Hibernate only checks that entities match it.
+      ddl-auto: validate
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
