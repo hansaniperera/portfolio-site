@@ -11,6 +11,10 @@ spring:
     hibernate:
       # Flyway owns the schema; Hibernate only checks that entities match it.
       ddl-auto: validate
+  mvc:
+    # Errors use the RFC 9457 application/problem+json format.
+    problemdetails:
+      enabled: true
 
 management:
   endpoints:
